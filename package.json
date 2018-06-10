@@ -5,6 +5,10 @@
     "start": "node server.js",
     "start-dev": "nodemon server.js"
   },
+  "author": "Bimal Kumar H",
+  "license": "ISC",
+  "description": "Demo rest and jwt",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
