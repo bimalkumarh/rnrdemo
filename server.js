@@ -8,8 +8,10 @@ var config = require('./database');
 var verifyToken = require('./middleware/verifyToken');
 var addNewUser = require('./middleware/addNewUser');
 var userLoginCheck = require('./middleware/userLoginCheck');
-var findAllUsers = require('./middleware/findAllUsers');
+//var findAllUsers = require('./middleware/findAllUsers');
 var welcome = require('./middleware/welcome');
+var getLoggedInUserInfo = require('./middleware/getLoggedInUserInfo');
+var savePassword = require('./middleware/savePassword');
 
 var port = process.env.PORT || 4200;
 
@@ -30,6 +32,8 @@ apiRoutes.use(bodyParser.json());
 //route middleware to verify a token 
 apiRoutes.use(verifyToken);
 apiRoutes.get('/', welcome);
-apiRoutes.get('/users', findAllUsers);
+//apiRoutes.get('/users', findAllUsers);
+apiRoutes.get('/userinfo', getLoggedInUserInfo);
+apiRoutes.post('/savePassword', savePassword);
 
 app.use('/api', apiRoutes);

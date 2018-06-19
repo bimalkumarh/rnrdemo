@@ -13,6 +13,7 @@ var config = require('../config'); // get our config file
 
 var verifyToken = function (req, res, next) {
 	var token = req.body.token || req.query.token || req.headers['token'];
+	console.log("token", token);
 	if (token) {
 		// verify secret and checks exp
 		jwt.verify(token, config.secret, function (err, currUser) {
