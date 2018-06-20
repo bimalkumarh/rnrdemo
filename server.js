@@ -12,7 +12,8 @@ var userLoginCheck = require('./middleware/userLoginCheck');
 var welcome = require('./middleware/welcome');
 var getLoggedInUserInfo = require('./middleware/getLoggedInUserInfo');
 var savePassword = require('./middleware/savePassword');
-
+var test = require('./middleware/test');
+var requestAccessToken = require('./middleware/requestAccessToken');
 var port = process.env.PORT || 4200;
 
 //var twilio = require('twilio');
@@ -25,6 +26,9 @@ app.listen(port, function () {
 
 app.post('/signup', addNewUser);
 app.post('/userlogin', userLoginCheck);
+app.get("/test",test);
+app.get('/oauth/linkedin', test);
+app.get('/oauth/linkedin/callback',requestAccessToken);
 
 var apiRoutes = express.Router();
 apiRoutes.use(bodyParser.urlencoded({ extended: true }));

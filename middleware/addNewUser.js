@@ -3,11 +3,12 @@ var mysql = require("mysql");
 var express = require("express");
 var sha1 = require("sha1");
 var connection = require("../database");
-
+var jwt = require('jsonwebtoken');
+var config = require('../config');
 
 var addNewUser = function (req, res, next) {
 	var date = new Date();
-	var post = [req.body.first_name, req.body.last_name, req.body.email, sha1(req.body.password)];
+	var post = [req.body.first_name, req.body.last_name, req.body.email, ""];
 	console.log(post);
 	var query = "SELECT email FROM user WHERE email=?";
 
@@ -24,7 +25,10 @@ var addNewUser = function (req, res, next) {
 					if (err) {
 						res.json({ "Error": true, "Message": "Error executing MySQL query" });
 					} else {
-						res.json({ "Error": false, "Message": "Success" });
+						var token = jwt.sign({ "user_id": rows.insertId, "email": req.body.email }, config.secret, {
+							expiresIn: 1440
+						});
+						res.json({ "Error": false, "Message": "Success", token: token, currUser: rows.insertId });
 					}
 				});
 
