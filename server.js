@@ -3,7 +3,7 @@ var http = require('http');
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
 var config = require('./config');
-var config = require('./database');
+var cookieParser = require('cookie-parser');
 
 var verifyToken = require('./middleware/verifyToken');
 var addNewUser = require('./middleware/addNewUser');
@@ -14,10 +14,12 @@ var getLoggedInUserInfo = require('./middleware/getLoggedInUserInfo');
 var savePassword = require('./middleware/savePassword');
 var test = require('./middleware/test');
 var requestAccessToken = require('./middleware/requestAccessToken');
+var readFeeds = require('./middleware/readFeeds');
 var port = process.env.PORT || 4200;
 
 //var twilio = require('twilio');
 var app = express();
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.listen(port, function () {
@@ -29,6 +31,7 @@ app.post('/userlogin', userLoginCheck);
 app.get("/test",test);
 app.get('/oauth/linkedin', test);
 app.get('/oauth/linkedin/callback',requestAccessToken);
+app.get('/linkedin/feeds',readFeeds);
 
 var apiRoutes = express.Router();
 apiRoutes.use(bodyParser.urlencoded({ extended: true }));
