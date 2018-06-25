@@ -1,7 +1,7 @@
 var APIKey = "81w7lxbgjbu0om";
 var APIKeySecret = "HrW2dJGz1zqyj9oq";
 
-var test = function (req, res) {
+var readFeed = function (req, res) {
     console.log("Cookies :  ", req.cookies.linkedin_access_token);
     if (req.cookies.linkedin_access_token) {
         var request = require("request");
@@ -27,5 +27,5 @@ var test = function (req, res) {
 };
 
 
-module.exports = test;
+module.exports = readFeed;
 
