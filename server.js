@@ -16,6 +16,7 @@ var test = require('./middleware/test');
 var requestAccessToken = require('./middleware/requestAccessToken');
 var readFeeds = require('./middleware/readFeeds');
 var forgotPassword = require('./middleware/changePassword');
+var forgotPasswordEmail = require('./middleware/forgotPasswordEmail');
 var port = process.env.PORT || 4200;
 
 //var twilio = require('twilio');
@@ -23,17 +24,18 @@ var app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.listen(port, function() {
+app.listen(port, function () {
     console.log('Express server listening on port ' + port);
 });
 
 app.post('/signup', addNewUser);
 app.post('/userlogin', userLoginCheck);
-app.post('/forgotpw', changePassword);
+app.post('/forgotpw', forgotPassword);
 app.get("/test", test);
 app.get('/oauth/linkedin', test);
 app.get('/oauth/linkedin/callback', requestAccessToken);
 app.get('/linkedin/feeds', readFeeds);
+app.post('/forgotpw/sendemail', forgotPasswordEmail);
 
 var apiRoutes = express.Router();
 apiRoutes.use(bodyParser.urlencoded({ extended: true }));
