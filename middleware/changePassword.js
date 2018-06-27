@@ -1,4 +1,5 @@
 
+
 var mysql = require("mysql");
 var express = require("express");
 var jwt = require('jsonwebtoken');
@@ -17,17 +18,24 @@ var changePassword = function (req, res) {
             res.json({ "Error": true, "Message": "Error executing MySQL query" });
         } else {
             if (rows.length == 1) {
-                if (regex.test(password)) {
-                    var query = "update user set password=? WHERE user_id=?";
-                    connection.query(query, [sha1(password), userId], function (err, rows) {
-                        if (err) {
-                            res.json({ "Error": true, "Message": "Error executing MySQL query" });
-                        } else {
-                            res.json({ "Error": true, "Message": "Password changed successfully." });
-                        }
-                    });
+                var requestedTime = new Date(rows[0].forgotpw_reqtime);
+                var currentTime = new Date();
+                var timeDiff = Math.round((currentTime.getTime() - requestedTime.getTime()) / 3600000);
+                if (timeDiff <= 24) {
+                    if (regex.test(password)) {
+                        var query = "update user set password=? WHERE user_id=?";
+                        connection.query(query, [sha1(password), userId], function (err, rows1) {
+                            if (err) {
+                                res.json({ "Error": true, "Message": "Error executing MySQL query" });
+                            } else {
+                                res.json({ "Error": true, "Message": "Password changed successfully." });
+                            }
+                        });
+                    } else {
+                        res.json({ "Error": true, "Message": "Password should have minimum 8 characters, one number and should have one special character among $@$!%#*?&^-_" });
+                    }
                 } else {
-                    res.json({ "Error": true, "Message": "Password should have minimum 8 characters, one number and should have one special character among $@$!%#*?&^-_" });
+                    res.json({ "Error": true, "Message": "The link has expired." });
                 }
             } else {
                 res.json({ "Error": true, "Message": "User details not found." });

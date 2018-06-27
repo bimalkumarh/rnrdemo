@@ -34,10 +34,21 @@ var forgotPasswordEmail = function (req, res) {
             res.json({ "Error": true, "Message": "Error executing MySQL query" });
         } else {
             if (rows.length == 1) {
+                //need to add this field in the database
+                var query = "update user set forgotpw_reqtime=? WHERE user_id=?";
+                var requestedTime = new Date().toString();
+                connection.query(query, [requestedTime, rows[0].user_id], function (err, result) {
+                    if (err) {
+                        console.log("Error executing MySQL query");
+                    } else {
+                        console.log("forgot password request timestamp updated");
+                    }
+                });
+
                 readHTMLFile(__dirname + '/emailforgotpw.html', function (err, html) {
                     var template = handlebars.compile(html);
                     var replacements = {
-                        url: "www.example.com/somepage?userid="+rows[0].user_id
+                        url: "www.example.com/somepage?userid=" + rows[0].user_id
                     };
                     var htmlToSend = template(replacements);
                     console.log("htmlToSend", htmlToSend);
