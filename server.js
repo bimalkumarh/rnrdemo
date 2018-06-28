@@ -17,6 +17,8 @@ var requestAccessToken = require('./middleware/requestAccessToken');
 var readFeeds = require('./middleware/readFeeds');
 var forgotPassword = require('./middleware/changePassword');
 var forgotPasswordEmail = require('./middleware/forgotPasswordEmail');
+var documentUpload = require('./middleware/documentUpload');
+
 var port = process.env.PORT || 4200;
 
 //var twilio = require('twilio');
@@ -46,5 +48,6 @@ apiRoutes.get('/', welcome);
 //apiRoutes.get('/users', findAllUsers);
 apiRoutes.get('/userinfo', getLoggedInUserInfo);
 apiRoutes.post('/savePassword', savePassword);
+apiRoutes.post('/document/upload', documentUpload);
 
 app.use('/api', apiRoutes);
