@@ -1,0 +1,35 @@
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#frmTest").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData();
+            formData.append('filetoupload', $('#file')[0].files[0]);
+            formData.append('expdate', $('#expdate').val());
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                url: '/test',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                /*headers: {
+                    "content-type": "application/json",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiZW1haWwiOiJqZEBnbWFpbC5jb20iLCJpYXQiOjE1MzAyOTMxMjksImV4cCI6MTUzMDI5NDU2OX0.pjDAyn1ga33S2LiLVgCovYFQ8B6ThW9nP_JAOjkqRPweyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiZW1haWwiOiJqZEBnbWFpbC5jb20iLCJpYXQiOjE1MzAyOTMxMjksImV4cCI6MTUzMDI5NDU2OX0.pjDAyn1ga33S2LiLVgCovYFQ8B6ThW9nP_JAOjkqRPweyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiZW1haWwiOiJqZEBnbWFpbC5jb20iLCJpYXQiOjE1MzAyOTMxMjksImV4cCI6MTUzMDI5NDU2OX0.pjDAyn1ga33S2LiLVgCovYFQ8B6ThW9nP_JAOjkqRPw",
+                },*/
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+
+        });
+    });  
+</script>
+<form id="frmTest" action="javascript:void(0)">
+    <input id="file" type="file" name="filetoupload">
+    <br>
+    <input id="expdate" type="text" name="expdate">
+    <br>
+    <input type="submit">
+</form>

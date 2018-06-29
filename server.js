@@ -33,11 +33,13 @@ app.listen(port, function () {
 app.post('/signup', addNewUser);
 app.post('/userlogin', userLoginCheck);
 app.post('/forgotpw', forgotPassword);
-app.get("/test", test);
+app.get("/linkedin/auth", test);
 app.get('/oauth/linkedin', test);
 app.get('/oauth/linkedin/callback', requestAccessToken);
 app.get('/linkedin/feeds', readFeeds);
 app.post('/forgotpw/sendemail', forgotPasswordEmail);
+
+app.all('/test', documentUpload);
 
 var apiRoutes = express.Router();
 apiRoutes.use(bodyParser.urlencoded({ extended: true }));
@@ -48,6 +50,6 @@ apiRoutes.get('/', welcome);
 //apiRoutes.get('/users', findAllUsers);
 apiRoutes.get('/userinfo', getLoggedInUserInfo);
 apiRoutes.post('/savePassword', savePassword);
-apiRoutes.post('/document/upload', documentUpload);
+//apiRoutes.post('/document/upload', documentUpload);
 
 app.use('/api', apiRoutes);

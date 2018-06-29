@@ -9,7 +9,7 @@ var connection = require("../database");
 var userLoginCheck = function (req, res) {
 
 	var query = "SELECT * FROM user WHERE email=? AND password=?";
-
+	console.log("sha",sha1(req.body.password));
 	connection.query(query, [req.body.email, sha1(req.body.password)], function (err, rows) {
 		if (err) {
 			res.json({ "Error": true, "Message": "Error executing MySQL query" });
