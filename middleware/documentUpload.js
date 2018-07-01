@@ -11,9 +11,9 @@ var documentUpload = function (req, res) {
     if (req.method == "POST") {
         var decoded, userId;
         try {
-            //decoded = jwt.verify(req.headers.token, config.secret);
-            //userId = decoded.user_id;
-            userId = 22;
+            decoded = jwt.verify(req.headers.token, config.secret);
+            userId = decoded.user_id;
+            //userId = 22;
             var form = new formidable.IncomingForm();
             form.parse(req, function (err, fields, files) {
                 console.log('expdate', fields.expdate);
@@ -26,16 +26,16 @@ var documentUpload = function (req, res) {
                 connection.query(query, [fileName, mimeType, userId, expdate, fileData], function (err, rows) {
                     if (err) {
                         console.log('error', err);
+                        res.json({ "Error": true, "Message": "Error executing query." });
                     } else {
                         console.log("saved");
+                        res.json({ "Error": false, "Message": "File upoaded successfully." });
                     }
                 });
             });
         } catch (e) {
             return res.status(401).send('unauthorized');
         }
-
     }
-    res.sendFile(__dirname + '/upload.html');
 };
 module.exports = documentUpload;

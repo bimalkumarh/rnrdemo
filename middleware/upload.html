@@ -3,24 +3,27 @@
     $(document).ready(function () {
         $("#frmTest").submit(function (e) {
             e.preventDefault();
-            var formData = new FormData();
-            formData.append('filetoupload', $('#file')[0].files[0]);
-            formData.append('expdate', $('#expdate').val());
-            $.ajax({
+            var formData = new FormData($(this)[0]);
+            //formData.append('filetoupload', $('#file')[0].files[0]);
+            //formData.append('expdate', $('#expdate').val());           
+
+            var settings = {
                 "async": true,
                 "crossDomain": true,
-                url: '/test',
-                type: 'POST',
+                "url": "http://localhost:4200/api/document/upload",
+                "method": "POST",
                 data: formData,
                 processData: false,
                 contentType: false,
-                /*headers: {
-                    "content-type": "application/json",
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiZW1haWwiOiJqZEBnbWFpbC5jb20iLCJpYXQiOjE1MzAyOTMxMjksImV4cCI6MTUzMDI5NDU2OX0.pjDAyn1ga33S2LiLVgCovYFQ8B6ThW9nP_JAOjkqRPweyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiZW1haWwiOiJqZEBnbWFpbC5jb20iLCJpYXQiOjE1MzAyOTMxMjksImV4cCI6MTUzMDI5NDU2OX0.pjDAyn1ga33S2LiLVgCovYFQ8B6ThW9nP_JAOjkqRPweyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiZW1haWwiOiJqZEBnbWFpbC5jb20iLCJpYXQiOjE1MzAyOTMxMjksImV4cCI6MTUzMDI5NDU2OX0.pjDAyn1ga33S2LiLVgCovYFQ8B6ThW9nP_JAOjkqRPw",
-                },*/
-                success: function (data) {
-                    console.log(data);
+                "headers": {
+                    //"content-type": "application/json",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxOCwiZW1haWwiOiJqZEBnbWFpbC5jb20iLCJpYXQiOjE1MzA0MTk3MzcsImV4cCI6MTUzMDUwNjEzN30.m3F0wKAkLOyEkJuwFfKOqkwcs16-U2hP0Ic_R-DMk5I",
                 }
+            }
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                location.reload();
             });
 
         });

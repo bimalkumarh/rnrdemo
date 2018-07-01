@@ -18,6 +18,7 @@ var readFeeds = require('./middleware/readFeeds');
 var forgotPassword = require('./middleware/changePassword');
 var forgotPasswordEmail = require('./middleware/forgotPasswordEmail');
 var documentUpload = require('./middleware/documentUpload');
+var documentDelete = require('./middleware/documentDelete');
 
 var port = process.env.PORT || 4200;
 
@@ -39,7 +40,7 @@ app.get('/oauth/linkedin/callback', requestAccessToken);
 app.get('/linkedin/feeds', readFeeds);
 app.post('/forgotpw/sendemail', forgotPasswordEmail);
 
-app.all('/test', documentUpload);
+app.all('/test', test);
 
 var apiRoutes = express.Router();
 apiRoutes.use(bodyParser.urlencoded({ extended: true }));
@@ -50,6 +51,7 @@ apiRoutes.get('/', welcome);
 //apiRoutes.get('/users', findAllUsers);
 apiRoutes.get('/userinfo', getLoggedInUserInfo);
 apiRoutes.post('/savePassword', savePassword);
-//apiRoutes.post('/document/upload', documentUpload);
+apiRoutes.post('/document/upload', documentUpload);
+apiRoutes.get('/document/delete/:documentId',documentDelete);
 
 app.use('/api', apiRoutes);

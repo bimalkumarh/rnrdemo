@@ -19,7 +19,7 @@ var userLoginCheck = function (req, res) {
 			if (rows.length == 1) {
 				var test = rows;
 				var token = jwt.sign({"user_id":rows[0].user_id,"email":rows[0].email}, config.secret, {
-					expiresIn: 1440
+					expiresIn: '1d'
 				});
 				user_id = rows[0].userid;
 				var data = [rows[0].user_id, token]
