@@ -19,6 +19,7 @@ var forgotPassword = require('./middleware/changePassword');
 var forgotPasswordEmail = require('./middleware/forgotPasswordEmail');
 var documentUpload = require('./middleware/documentUpload');
 var documentDelete = require('./middleware/documentDelete');
+var documentView = require('./middleware/documentView');
 
 var port = process.env.PORT || 4200;
 
@@ -53,5 +54,5 @@ apiRoutes.get('/userinfo', getLoggedInUserInfo);
 apiRoutes.post('/savePassword', savePassword);
 apiRoutes.post('/document/upload', documentUpload);
 apiRoutes.get('/document/delete/:documentId',documentDelete);
-
+apiRoutes.get('/document/view/:documentId',documentView);
 app.use('/api', apiRoutes);
